@@ -69,7 +69,7 @@ const Login = ({ navigation }) => {
                   <Icon
                     as={
                       <Iconify
-                        icon="solar:plain-3-bold"
+                        icon="solar:letter-bold"
                         size={18}
                         strokeWidth={20}
                       />
@@ -98,7 +98,7 @@ const Login = ({ navigation }) => {
                   <Icon
                     as={
                       <Iconify
-                        icon="solar:plain-3-bold"
+                        icon="solar:lock-password-bold"
                         size={18}
                         strokeWidth={20}
                       />

@@ -37,13 +37,10 @@ const VerifyNumber = ({ navigation }) => {
             <BackButton styles={{ width: 24, height: 24 }} />
             <Box>
               <Heading size="lg" fontWeight="700">
-                Verify {"\n"}your phone number
+                Verify {"\n"}phone number
               </Heading>
               <Heading
                 mt="2"
-                _dark={{
-                  color: "warmGray.200",
-                }}
                 color={darkTheme.grayColor}
                 fontWeight="medium"
                 size="xs"
@@ -56,6 +53,7 @@ const VerifyNumber = ({ navigation }) => {
           <VStack space={7} mt="10">
             <FormControl>
               <Input
+                keyboardType="phone-pad"
                 bgColor={darkTheme.accentColor3}
                 borderColor={"transparent"}
                 rounded={"lg"}
@@ -69,7 +67,7 @@ const VerifyNumber = ({ navigation }) => {
                   <Icon
                     as={
                       <Iconify
-                        icon="solar:plain-3-bold"
+                        icon="solar:phone-bold"
                         size={18}
                         strokeWidth={20}
                       />
@@ -79,11 +77,21 @@ const VerifyNumber = ({ navigation }) => {
                     ml="2"
                   />
                 }
-                placeholder="Full Name"
+                InputRightElement={
+                  <Button
+                    variant="unstyled"
+                    mr="2"
+                    _text={{ color: "indigo.500", fontSize: "xs" }}
+                  >
+                    Get code
+                  </Button>
+                }
+                placeholder="Phone Number"
               />
             </FormControl>
             <FormControl>
               <Input
+                keyboardType="phone-pad"
                 bgColor={darkTheme.accentColor3}
                 borderColor={"transparent"}
                 rounded={"lg"}
@@ -97,7 +105,7 @@ const VerifyNumber = ({ navigation }) => {
                   <Icon
                     as={
                       <Iconify
-                        icon="solar:plain-3-bold"
+                        icon="solar:hashtag-square-bold"
                         size={18}
                         strokeWidth={20}
                       />
@@ -107,91 +115,16 @@ const VerifyNumber = ({ navigation }) => {
                     ml="2"
                   />
                 }
-                placeholder="Email"
+                placeholder="Code"
               />
             </FormControl>
-            <FormControl>
-              <Input
-                type="password"
-                bgColor={darkTheme.accentColor3}
-                borderColor={"transparent"}
-                rounded={"lg"}
-                color={darkTheme.textColor}
-                _focus={{
-                  bgColor: darkTheme.accentColor3,
-                  borderColor: "transparent",
-                }}
-                placeholderTextColor={darkTheme.grayColor}
-                InputLeftElement={
-                  <Icon
-                    as={
-                      <Iconify
-                        icon="solar:plain-3-bold"
-                        size={18}
-                        strokeWidth={20}
-                      />
-                    }
-                    size={5}
-                    color={darkTheme.grayColor}
-                    ml="2"
-                  />
-                }
-                placeholder="Password"
-              />
-              {/* <Link
-                _text={{
-                  fontSize: "xs",
-                  fontWeight: "500",
-                  color: "indigo.500",
-                }}
-                alignSelf="flex-end"
-                mt="1"
-              >
-                Forget Password?
-              </Link> */}
-            </FormControl>
-            <FormControl>
-              <Input
-                type="password"
-                bgColor={darkTheme.accentColor3}
-                borderColor={"transparent"}
-                rounded={"lg"}
-                color={darkTheme.textColor}
-                _focus={{
-                  bgColor: darkTheme.accentColor3,
-                  borderColor: "transparent",
-                }}
-                placeholderTextColor={darkTheme.grayColor}
-                InputLeftElement={
-                  <Icon
-                    as={
-                      <Iconify
-                        icon="solar:plain-3-bold"
-                        size={18}
-                        strokeWidth={20}
-                      />
-                    }
-                    size={5}
-                    color={darkTheme.grayColor}
-                    ml="2"
-                  />
-                }
-                placeholder="Confirm Password"
-              />
-              {/* <Link
-                _text={{
-                  fontSize: "xs",
-                  fontWeight: "500",
-                  color: "indigo.500",
-                }}
-                alignSelf="flex-end"
-                mt="1"
-              >
-                Forget Password?
-              </Link> */}
-            </FormControl>
-            <Button mt="2" colorScheme="indigo" rounded="lg">
-              Sign in
+            <Button
+              mt="2"
+              colorScheme="indigo"
+              rounded="lg"
+              onPress={() => navigation.navigate(routeNames.BANKSETUP)}
+            >
+              Verify Code
             </Button>
           </VStack>
           <HStack
@@ -207,19 +140,8 @@ const VerifyNumber = ({ navigation }) => {
                 color: "warmGray.200",
               }}
             >
-              Already a user?{" "}
+              Skip
             </Text>
-            <Link
-              _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
-                textDecoration: "none",
-              }}
-              onPress={() => navigation.navigate(routeNames.SIGNIN)}
-            >
-              Sign in
-            </Link>
           </HStack>
         </Box>
       </Center>

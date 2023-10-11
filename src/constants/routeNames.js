@@ -10,4 +10,6 @@ export const routeNames = {
   SIGNUP: "signup",
   ONBOARD: "onboard",
   VERIFYNUMBER: "verify_number",
+  BANKSETUP: "banks_setup",
+  VERIFICATIONCOMPLETE: "verification_complete",
 };
