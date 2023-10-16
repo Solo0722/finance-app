@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Center,
   Heading,
@@ -13,14 +13,59 @@ import {
   HStack,
   VStack,
   Icon,
+  Divider,
 } from "native-base";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { darkTheme } from "../../theme/colors";
 import { Iconify } from "react-native-iconify";
 import BackButton from "../../components/BackButton";
-import { routeNames } from "../../constants/routeNames";
+import { routeNames, storageKeys } from "../../constants/routeNames";
+import { registerUser } from "../../services/apiServices";
+import { useState } from "react";
+import { saveToAsyncStorage } from "../../services/dataServices";
+import { useStore } from "../../store/Store";
+import { setLoggedInUser } from "../../store/modules/auth/actions/AuthAction";
 
 const Signup = ({ navigation }) => {
+  const [signupData, setSignupData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [isSignupEnabled, setIsSignupEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [dispatch] = useStore();
+
+  const handleChange = (name, value) => {
+    setSignupData({ ...signupData, [name]: value });
+  };
+
+  const signUserUp = async () => {
+    if (isSignupEnabled) {
+      // setLoading(true);
+      const response = registerUser(signupData);
+      if (response.data) {
+        console.log(response);
+        await saveToAsyncStorage(storageKeys.USER, response.data);
+        // dispatch(setLoggedInUser(response.data));
+        // navigation.navigate(routeNames.VERIFICATIONCOMPLETE);
+      }
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (
+      signupData.fullName &&
+      signupData.email &&
+      signupData.password &&
+      signupData.confirmPassword &&
+      signupData.password.trim() === signupData.confirmPassword.trim()
+    )
+      setIsSignupEnabled(true);
+  }, [signupData]);
+
   return (
     <ScreenWrapper>
       <Center w="100%" height="100%" flex="1">
@@ -56,6 +101,9 @@ const Signup = ({ navigation }) => {
           <VStack space={7} mt="10">
             <FormControl>
               <Input
+                name="fullName"
+                value={signupData.fullName}
+                onChangeText={(e) => handleChange("fullName", e)}
                 bgColor={darkTheme.accentColor3}
                 borderColor={"transparent"}
                 rounded={"lg"}
@@ -84,6 +132,9 @@ const Signup = ({ navigation }) => {
             </FormControl>
             <FormControl>
               <Input
+                name="email"
+                value={signupData.email}
+                onChangeText={(e) => handleChange("email", e)}
                 bgColor={darkTheme.accentColor3}
                 borderColor={"transparent"}
                 rounded={"lg"}
@@ -112,6 +163,9 @@ const Signup = ({ navigation }) => {
             </FormControl>
             <FormControl>
               <Input
+                name="password"
+                value={signupData.password}
+                onChangeText={(e) => handleChange("password", e)}
                 type="password"
                 bgColor={darkTheme.accentColor3}
                 borderColor={"transparent"}
@@ -138,20 +192,12 @@ const Signup = ({ navigation }) => {
                 }
                 placeholder="Password"
               />
-              {/* <Link
-                _text={{
-                  fontSize: "xs",
-                  fontWeight: "500",
-                  color: "indigo.500",
-                }}
-                alignSelf="flex-end"
-                mt="1"
-              >
-                Forget Password?
-              </Link> */}
             </FormControl>
             <FormControl>
               <Input
+                name="confirmPassword"
+                value={signupData.confirmPassword}
+                onChangeText={(e) => handleChange("confirmPassword", e)}
                 type="password"
                 bgColor={darkTheme.accentColor3}
                 borderColor={"transparent"}
@@ -178,25 +224,34 @@ const Signup = ({ navigation }) => {
                 }
                 placeholder="Confirm Password"
               />
-              {/* <Link
-                _text={{
-                  fontSize: "xs",
-                  fontWeight: "500",
-                  color: "indigo.500",
-                }}
-                alignSelf="flex-end"
-                mt="1"
-              >
-                Forget Password?
-              </Link> */}
             </FormControl>
             <Button
               mt="2"
               colorScheme="indigo"
               rounded="lg"
-              onPress={() => navigation.navigate(routeNames.VERIFYNUMBER)}
+              onPress={signUserUp}
+              isLoading={loading}
+              disabled={!isSignupEnabled}
+              _disabled={{
+                color: "red.300",
+              }}
             >
               Sign up
+            </Button>
+            <Divider thickness={0.15} bgColor={darkTheme.grayColor}>
+              or
+            </Divider>
+            <Button
+              mt="2"
+              colorScheme="blueGray"
+              bgColor={"coolGray.800"}
+              _text={{
+                color: darkTheme.lightGrayColor,
+              }}
+              rounded="lg"
+              onPress={() => navigation.navigate(routeNames.VERIFYNUMBER)}
+            >
+              Continue with Google
             </Button>
           </VStack>
           <HStack

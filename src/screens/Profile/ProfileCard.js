@@ -23,7 +23,7 @@ const ProfileCard = () => {
       alignContent={"center"}
       p={"4"}
       position="relative"
-      mt="100"
+      mt="8"
     >
       <Circle
         w={100}

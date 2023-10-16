@@ -10,7 +10,10 @@ import { Iconify } from "react-native-iconify";
 import QuickAccess from "./QuickAccess";
 import BankCard from "./BankCard";
 import TransactionHistory from "./TransactionHistory";
-import { routeNames } from "../../constants/routeNames";
+import { routeNames, storageKeys } from "../../constants/routeNames";
+import CardCarousel from "./CardCarousel";
+import { readFromAsyncStorage } from "../../services/dataServices";
+import { useEffect } from "react";
 
 const Home = ({ navigation }) => {
   useFocusEffect(
@@ -75,7 +78,7 @@ const Home = ({ navigation }) => {
                     }}
                     icon={
                       <Iconify
-                        icon="solar:settings-bold"
+                        icon="solar:scanner-bold"
                         size={18}
                         color={darkTheme.lightGrayColor}
                         strokeWidth={18}
@@ -95,7 +98,7 @@ const Home = ({ navigation }) => {
     <ScreenWrapper>
       <VirtualizedList>
         <VStack space={"10"} pt={"5"}>
-          <BankCard />
+          <CardCarousel />
           <QuickAccess />
           <TransactionHistory />
         </VStack>

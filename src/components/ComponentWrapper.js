@@ -16,7 +16,7 @@ const ComponentWrapper = ({ title, secondaryBtn, children }) => {
             {title}
           </Heading>
           {secondaryBtn && (
-            <Text fontSize="xs" color="primary.400">
+            <Text fontSize="xs" color="darkBlue.500" opacity="0.5">
               {secondaryBtn.text}
             </Text>
           )}

@@ -1,56 +1,44 @@
-import axios from "axios";
+import uniqueId from "lodash/uniqueId";
+import { client } from "./sanityClient";
+import { saveToAsyncStorage } from "./dataServices";
+import { storageKeys } from "../constants/routeNames";
 
-const axiosInstance = axios.create({
-  baseURL: "https://api.deezer.com/",
-});
+export const registerUser = (signupData) => {
+  const response = { data: null, error: null };
+  const doc = {
+    _id: uniqueId(),
+    _type: "user",
+    fullName: signupData.fullName,
+    email: signupData.email,
+    password: signupData.password,
+    userImg: null,
+  };
 
-export const getTopTracks = async () => {
-  try {
-    const data = await axiosInstance.get("chart/0/tracks");
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-export const getTopArtists = async () => {
-  try {
-    const data = await axiosInstance.get("chart/0/artists");
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-export const getTopPodcasts = async () => {
-  try {
-    const data = await axiosInstance.get("chart/0/podcasts");
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-export const getTopAlbums = async () => {
-  try {
-    const data = await axiosInstance.get("chart/0/albums");
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-export const getListOfGenres = async () => {
-  try {
-    const data = await axiosInstance.get("genre");
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
+  client
+    .createIfNotExists(doc)
+    .then((result) => {
+      response.data = result;
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+      response.error = err;
+      return response;
+    });
 };
 
-export const getListOfAlbumTracks = async (albumId) => {
-  try {
-    const data = await axiosInstance.get(`album/${albumId}/tracks`);
-    console.log(data.data);
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
+export const loginUser = (loginData) => {
+  const response = { data: null, error: null };
+  const query = `*[_type == 'user' && username == '${loginData.username.trim()}' && password == '${loginData.password.trim()}']`;
+  client
+    .fetch(query)
+    .then((result) => {
+      response.data = result;
+      return response;
+    })
+    .catch((err) => {
+      console.log(err);
+      response.error = err;
+      return response;
+    });
 };

@@ -10,6 +10,7 @@ import nativebaseTheme from "./src/theme/nativeBaseTheme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useStatusBar } from "./src/hooks/useStatusBar";
 import { useNavigationBar } from "./src/hooks/useNavigationBar";
+import { StoreProvider } from "./src/store/Store";
 
 export default function App() {
   useStatusBar();
@@ -57,10 +58,12 @@ export default function App() {
   const queryClient = new QueryClient();
 
   return (
-    <NativeBaseProvider theme={nativebaseTheme}>
-      <QueryClientProvider client={queryClient}>
-        <RootNavigator />
-      </QueryClientProvider>
-    </NativeBaseProvider>
+    <StoreProvider>
+      <NativeBaseProvider theme={nativebaseTheme}>
+        <QueryClientProvider client={queryClient}>
+          <RootNavigator />
+        </QueryClientProvider>
+      </NativeBaseProvider>
+    </StoreProvider>
   );
 }

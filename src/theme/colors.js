@@ -1,11 +1,12 @@
 export const defaultTheme = {
-  primaryColor: "#0066f6",
-  lightPrimaryColor: "#5c8ff4",
-  primarySubTitleColor: "#afc9fc",
+  primaryColor: "#0077e6",
+  lightPrimaryColor: "#4aa9ff",
+  primarySubTitleColor: "#addbff",
   secondaryColor: "#082552",
   grayColor: "#58647B",
   lightGrayColor: "#A3A8B8",
   graySubtitleColor: "#e6effe",
+  success: "#22c55e",
 };
 
 export const lightTheme = {

@@ -7,7 +7,7 @@ import Profile from "../screens/Profile/Profile";
 import { Iconify } from "react-native-iconify";
 import { darkTheme } from "../theme/colors";
 import BudgetsLanding from "../screens/Budgets/BudgetsLanding";
-import InvestLanding from "../screens/Invest/InvestLanding";
+import SavingsLanding from "../screens/Savings/SavingsLanding";
 import ExploreLanding from "../screens/Explore/ExploreLanding";
 
 const TabNavigator = () => {
@@ -55,9 +55,9 @@ const TabNavigator = () => {
       ),
     },
     {
-      name: routeNames.INVEST,
-      label: "Invest",
-      component: InvestLanding,
+      name: routeNames.SAVINGS,
+      label: "Savings",
+      component: SavingsLanding,
       activeIconName: (
         <Iconify
           icon="solar:chart-2-bold"

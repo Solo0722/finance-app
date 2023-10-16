@@ -1,11 +1,10 @@
 import { StyleSheet } from "react-native";
 import React from "react";
-import { Center, Text } from "native-base";
 import ScreenWrapper from "../../components/ScreenWrapper";
+import { Box, Button, Center } from "native-base";
 import { routeNames } from "../../constants/routeNames";
-import LottiePlayer from "../../components/LottiePlayer";
 
-const AuthComplete = ({ navigation }) => {
+const Onboard = ({ navigation }) => {
   return (
     <ScreenWrapper>
       <Center w="100%" height="100%" flex="1">
@@ -18,14 +17,19 @@ const AuthComplete = ({ navigation }) => {
           flex="1"
           position="relative"
         >
-          <LottiePlayer
-            animation={require("../../assets/lotties/verificationComplete.json")}
-            onAnimationFinish={() => navigation.navigate(routeNames.TAB)}
-          />
+          <Button
+            colorScheme="indigo"
+            rounded="lg"
+            onPress={() => navigation.navigate(routeNames.SIGNUP)}
+          >
+            Get Started
+          </Button>
         </Center>
       </Center>
     </ScreenWrapper>
   );
 };
 
-export default AuthComplete;
+export default Onboard;
+
+const styles = StyleSheet.create({});

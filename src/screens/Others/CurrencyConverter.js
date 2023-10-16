@@ -13,7 +13,6 @@ import {
   HStack,
   VStack,
   Icon,
-  Divider,
 } from "native-base";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { darkTheme } from "../../theme/colors";
@@ -21,24 +20,23 @@ import { Iconify } from "react-native-iconify";
 import BackButton from "../../components/BackButton";
 import { routeNames } from "../../constants/routeNames";
 
-const Login = ({ navigation }) => {
+const CurrencyConverter = ({ navigation }) => {
   return (
     <ScreenWrapper>
-      <Center w="100%" height="100%" flex="1">
+      <Box w="100%" height="100%" flex="1" safeArea p="2" py="8">
+        <BackButton styles={{ width: 24, height: 24 }} />
         <Box
           safeArea
-          p="2"
-          py="8"
           w="100%"
           height={"100%"}
           flex="1"
+          justifyContent={"center"}
           position="relative"
         >
           <VStack space={7}>
-            {/* <BackButton styles={{ width: 24, height: 24 }} /> */}
             <Box>
               <Heading size="lg" fontWeight="700">
-                Sign in {"\n"}to your account
+                Currency {"\n"}Converter
               </Heading>
               <Heading
                 mt="2"
@@ -49,7 +47,7 @@ const Login = ({ navigation }) => {
                 fontWeight="medium"
                 size="xs"
               >
-                Welcome back. We've missed you.
+                Get accurate foreign exchange conversion rates
               </Heading>
             </Box>
           </VStack>
@@ -66,7 +64,35 @@ const Login = ({ navigation }) => {
                   borderColor: "transparent",
                 }}
                 placeholderTextColor={darkTheme.grayColor}
-                InputLeftElement={
+                InputRightElement={
+                  <Icon
+                    as={
+                      <Iconify
+                        icon="solar:user-bold"
+                        size={18}
+                        strokeWidth={20}
+                      />
+                    }
+                    size={5}
+                    color={darkTheme.grayColor}
+                    mr="2"
+                  />
+                }
+                placeholder="From"
+              />
+            </FormControl>
+            <FormControl>
+              <Input
+                bgColor={darkTheme.accentColor3}
+                borderColor={"transparent"}
+                rounded={"lg"}
+                color={darkTheme.textColor}
+                _focus={{
+                  bgColor: darkTheme.accentColor3,
+                  borderColor: "transparent",
+                }}
+                placeholderTextColor={darkTheme.grayColor}
+                InputRightElement={
                   <Icon
                     as={
                       <Iconify
@@ -77,110 +103,27 @@ const Login = ({ navigation }) => {
                     }
                     size={5}
                     color={darkTheme.grayColor}
-                    ml="2"
+                    mr="2"
                   />
                 }
-                placeholder="Email"
+                placeholder="To"
               />
-            </FormControl>
-            <FormControl>
-              <Input
-                type="password"
-                bgColor={darkTheme.accentColor3}
-                borderColor={"transparent"}
-                rounded={"lg"}
-                color={darkTheme.textColor}
-                _focus={{
-                  bgColor: darkTheme.accentColor3,
-                  borderColor: "transparent",
-                }}
-                placeholderTextColor={darkTheme.grayColor}
-                InputLeftElement={
-                  <Icon
-                    as={
-                      <Iconify
-                        icon="solar:lock-password-bold"
-                        size={18}
-                        strokeWidth={20}
-                      />
-                    }
-                    size={5}
-                    color={darkTheme.grayColor}
-                    ml="2"
-                  />
-                }
-                placeholder="Password"
-              />
-              <Link
-                _text={{
-                  fontSize: "xs",
-                  fontWeight: "500",
-                  color: "indigo.500",
-                  textDecoration: "none",
-                }}
-                alignSelf="flex-end"
-                mt="1"
-              >
-                Forget Password?
-              </Link>
             </FormControl>
             <Button
               mt="2"
               colorScheme="indigo"
               rounded="lg"
-              onPress={() => navigation.navigate(routeNames.TAB)}
+              onPress={() => navigation.navigate(routeNames.VERIFYNUMBER)}
             >
-              Sign in
-            </Button>
-            <Divider variant="" thickness={0.15} bgColor={darkTheme.grayColor}>
-              or
-            </Divider>
-            <Button
-              mt="2"
-              colorScheme="blueGray"
-              bgColor={"coolGray.800"}
-              _text={{
-                color: darkTheme.lightGrayColor,
-              }}
-              rounded="lg"
-              onPress={() => navigation.navigate(routeNames.TAB)}
-            >
-              Continue with Google
+              Convert
             </Button>
           </VStack>
-          <HStack
-            style={{ position: "absolute", bottom: 20 }}
-            justifyContent="center"
-            textAlign="center"
-            w="full"
-          >
-            <Text
-              fontSize="sm"
-              color="coolGray.600"
-              _dark={{
-                color: "warmGray.200",
-              }}
-            >
-              I'm a new user.
-            </Text>
-            <Link
-              _text={{
-                color: "indigo.400",
-                fontWeight: "medium",
-                fontSize: "sm",
-                textDecoration: "none",
-              }}
-              onPress={() => navigation.navigate(routeNames.SIGNUP)}
-            >
-              Sign up
-            </Link>
-          </HStack>
         </Box>
-      </Center>
+      </Box>
     </ScreenWrapper>
   );
 };
 
-export default Login;
+export default CurrencyConverter;
 
 const styles = StyleSheet.create({});

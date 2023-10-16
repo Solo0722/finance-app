@@ -34,11 +34,7 @@ const TabHeader = ({
       >
         {showBackBtn && <BackButton />}
         {title ? (
-          <Heading
-            style={{ fontFamily: "PlusJakartaSans-regular", fontSize: 20 }}
-          >
-            {title}
-          </Heading>
+          <Heading fontSize="sm">{title}</Heading>
         ) : (
           <HStack space="2">
             {leftComponents.map((component) => component.component)}
