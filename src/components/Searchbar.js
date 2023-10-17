@@ -5,9 +5,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { darkTheme } from "../theme/colors";
 import { Iconify } from "react-native-iconify";
 
-const Searchbar = ({ width }) => {
+const Searchbar = ({ placeholderText }) => {
   return (
-    <View w={width ? width : "full"}>
+    <View flexGrow={1}>
       <Input
         variant={"filled"}
         rounded={"lg"}
@@ -17,7 +17,7 @@ const Searchbar = ({ width }) => {
         color={"white"}
         px={"2"}
         bgColor={darkTheme.accentColor3}
-        InputLeftElement={
+        InputRightElement={
           <Icon
             as={
               <Iconify
@@ -28,10 +28,10 @@ const Searchbar = ({ width }) => {
             }
             size={5}
             color={darkTheme.grayColor}
-            ml="2"
+            mr="2"
           />
         }
-        placeholder="Search budgets..."
+        placeholder={placeholderText ? placeholderText : "Search..."}
         placeholderTextColor={darkTheme.grayColor}
       />
     </View>

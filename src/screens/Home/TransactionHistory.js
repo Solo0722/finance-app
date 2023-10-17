@@ -26,7 +26,7 @@ const TransactionHistory = () => {
           data={[...new Array(10)]}
           //   keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionHistoryCard />}
-          ItemSeparatorComponent={<View my={"2"} />}
+          ItemSeparatorComponent={<View my={"1"} />}
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}
         />
@@ -39,7 +39,7 @@ const TransactionHistory = () => {
           data={[...new Array(10)]}
           //   keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionHistoryCard />}
-          ItemSeparatorComponent={<View my={"2"} />}
+          ItemSeparatorComponent={<View my={"1"} />}
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}
         />
@@ -52,7 +52,7 @@ const TransactionHistory = () => {
           data={[...new Array(10)]}
           //   keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionHistoryCard />}
-          ItemSeparatorComponent={<View my={"2"} />}
+          ItemSeparatorComponent={<View my={"1"} />}
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}
         />
@@ -65,7 +65,7 @@ const TransactionHistory = () => {
           data={[...new Array(10)]}
           //   keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionHistoryCard />}
-          ItemSeparatorComponent={<View my={"2"} />}
+          ItemSeparatorComponent={<View my={"1"} />}
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}
         />
@@ -117,12 +117,12 @@ const TransactionHistory = () => {
         tabBarPosition="top"
         swipeEnabled
         sceneContainerStyle={{
-          paddingVertical: 10,
+          paddingVertical: 20,
         }}
         pagerStyle={{
           // backgroundColor: "red",
           width: "100%",
-          // minHeight: 400,
+          minHeight: 400,
           display: "flex",
           flex: 1,
         }}

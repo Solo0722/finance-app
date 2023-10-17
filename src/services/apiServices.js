@@ -1,9 +1,9 @@
 import uniqueId from "lodash/uniqueId";
 import { client } from "./sanityClient";
-import { saveToAsyncStorage } from "./dataServices";
+import { clearFromAsyncStorage, saveToAsyncStorage } from "./dataServices";
 import { storageKeys } from "../constants/routeNames";
 
-export const registerUser = (signupData) => {
+export const registerUser = async (signupData) => {
   const response = { data: null, error: null };
   const doc = {
     _id: uniqueId(),
@@ -14,7 +14,7 @@ export const registerUser = (signupData) => {
     userImg: null,
   };
 
-  client
+  await client
     .createIfNotExists(doc)
     .then((result) => {
       response.data = result;
@@ -27,13 +27,13 @@ export const registerUser = (signupData) => {
     });
 };
 
-export const loginUser = (loginData) => {
+export const loginUser = async (loginData) => {
   const response = { data: null, error: null };
-  const query = `*[_type == 'user' && username == '${loginData.username.trim()}' && password == '${loginData.password.trim()}']`;
-  client
+  const query = `*[_type == 'user' && email == '${loginData.email.trim()}' && password == '${loginData.password.trim()}']`;
+  await client
     .fetch(query)
     .then((result) => {
-      response.data = result;
+      response.data = result[0];
       return response;
     })
     .catch((err) => {
@@ -41,4 +41,9 @@ export const loginUser = (loginData) => {
       response.error = err;
       return response;
     });
+};
+
+export const logoutUser = async () => {
+  const res = await clearFromAsyncStorage(storageKeys.USER);
+  return res;
 };

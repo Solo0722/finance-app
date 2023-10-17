@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { Avatar, HStack, Heading, IconButton, Text, VStack } from "native-base";
 import VirtualizedList from "../../components/VirtualisedList";
@@ -11,11 +11,16 @@ import QuickAccess from "./QuickAccess";
 import BankCard from "./BankCard";
 import TransactionHistory from "./TransactionHistory";
 import { routeNames, storageKeys } from "../../constants/routeNames";
-import CardCarousel from "./CardCarousel";
 import { readFromAsyncStorage } from "../../services/dataServices";
+import { GlobalContext } from "../../context/ContextProvider";
 import { useEffect } from "react";
+import moment from "moment";
+import BudgetForMonth from "./BudgetForMonth";
+import SavingsForMonth from "./SavingsForMonth";
 
 const Home = ({ navigation }) => {
+  const { loggedInUser } = useContext(GlobalContext);
+
   useFocusEffect(
     useCallback(() => {
       navigation.setOptions({
@@ -24,23 +29,29 @@ const Home = ({ navigation }) => {
             leftComponents={[
               {
                 component: (
-                  <HStack space="2" justifyContent={"center"}>
+                  <HStack
+                    space="2"
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
                     <Avatar
-                      size={10}
+                      size={9}
                       rounded={"full"}
                       _image={{
                         rounded: "full",
-                        width: 10,
-                        height: 10,
+                        width: 9,
+                        height: 9,
                       }}
                       source={{
-                        uri: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                        uri: loggedInUser?.userImg
+                          ? loggedInUser.userImg
+                          : "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
                       }}
                     />
                     <VStack space={"1"}>
-                      <Heading fontSize="md">Owusu Solomon</Heading>
+                      <Heading fontSize="md">{loggedInUser?.fullName}</Heading>
                       <Text fontSize="xs" color={darkTheme.grayColor}>
-                        20th October 2023
+                        {moment().format("Do MMMM YYYY")}
                       </Text>
                     </VStack>
                   </HStack>
@@ -52,33 +63,14 @@ const Home = ({ navigation }) => {
                 component: (
                   <IconButton
                     size="sm"
-                    onPress={() => navigation.navigate(routeNames.SIGNUP)}
-                    rounded={"full"}
+                    rounded={"lg"}
+                    bgColor={darkTheme.accentColor3}
                     _pressed={{
                       bgColor: darkTheme.accentColor3,
                     }}
                     icon={
                       <Iconify
                         icon="solar:bell-bold"
-                        size={18}
-                        color={darkTheme.lightGrayColor}
-                        strokeWidth={18}
-                      />
-                    }
-                  />
-                ),
-              },
-              {
-                component: (
-                  <IconButton
-                    size="sm"
-                    rounded={"full"}
-                    _pressed={{
-                      bgColor: darkTheme.accentColor3,
-                    }}
-                    icon={
-                      <Iconify
-                        icon="solar:scanner-bold"
                         size={18}
                         color={darkTheme.lightGrayColor}
                         strokeWidth={18}
@@ -97,9 +89,11 @@ const Home = ({ navigation }) => {
   return (
     <ScreenWrapper>
       <VirtualizedList>
-        <VStack space={"10"} pt={"5"}>
-          <CardCarousel />
+        <VStack space={"6"} pt={"5"}>
+          <BankCard />
           <QuickAccess />
+          <BudgetForMonth />
+          <SavingsForMonth />
           <TransactionHistory />
         </VStack>
       </VirtualizedList>

@@ -13,8 +13,8 @@ export const quickAccessList = [
         strokeWidth={20}
       />
     ),
-    color: "success.300",
-    name: "Send money",
+    color: "success.500",
+    name: "Record expense",
     toPage: "",
   },
   {
@@ -27,8 +27,8 @@ export const quickAccessList = [
         strokeWidth={20}
       />
     ),
-    color: "darkBlue.300",
-    name: "Receive money",
+    color: "danger.500",
+    name: "Record income",
     toPage: "",
   },
   {
@@ -56,7 +56,7 @@ export const quickAccessList = [
       />
     ),
     color: "darkBlue.300",
-    name: "Send money",
+    name: "New Budget",
     toPage: "",
   },
   {
@@ -70,7 +70,7 @@ export const quickAccessList = [
       />
     ),
     color: "darkBlue.300",
-    name: "Send money",
+    name: "New saving plan",
     toPage: "",
   },
   {

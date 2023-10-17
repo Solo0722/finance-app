@@ -11,8 +11,18 @@ import {
   View,
 } from "native-base";
 import { darkTheme } from "../../theme/colors";
+import { logoutUser } from "../../services/apiServices";
+import { useNavigation } from "@react-navigation/native";
+import { routeNames } from "../../constants/routeNames";
 
 const ProfileCard = () => {
+  const { navigate } = useNavigation();
+  const handleLogOut = () => {
+    logoutUser().then((res) => {
+      if (!res.error) navigate(routeNames.SIGNIN);
+    });
+  };
+
   return (
     <View
       w="full"
@@ -67,7 +77,13 @@ const ProfileCard = () => {
         <Button size="xs" w="1/3" variant={"unstyled"} bgColor={"darkBlue.500"}>
           Share profile
         </Button>
-        <Button size="xs" w="1/3" variant={"unstyled"} bgColor={"danger.500"}>
+        <Button
+          size="xs"
+          w="1/3"
+          variant={"unstyled"}
+          bgColor={"danger.500"}
+          onPress={handleLogOut}
+        >
           Logout
         </Button>
       </HStack>

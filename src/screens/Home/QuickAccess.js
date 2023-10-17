@@ -9,20 +9,17 @@ import { quickAccessList } from "./helpers/quickAccessList";
 
 const QuickAccess = () => {
   return (
-    <ComponentWrapper
-      title={"Quick Access"}
-      secondaryBtn={{ text: "View all" }}
-    >
-      <FlatList
-        w="full"
-        horizontal
-        data={quickAccessList}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <QuickAccessCard item={item} />}
-        ItemSeparatorComponent={<View mx={"2"} />}
-        showsHorizontalScrollIndicator={false}
-      />
-    </ComponentWrapper>
+    // <ComponentWrapper>
+    <FlatList
+      w="full"
+      horizontal
+      data={quickAccessList}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <QuickAccessCard item={item} />}
+      ItemSeparatorComponent={<View mx={"2"} />}
+      showsHorizontalScrollIndicator={false}
+    />
+    // </ComponentWrapper>
   );
 };
 

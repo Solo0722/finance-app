@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { Box, Button, Center } from "native-base";
-import { routeNames } from "../../constants/routeNames";
+import { routeNames, storageKeys } from "../../constants/routeNames";
+import { readFromAsyncStorage } from "../../services/dataServices";
 
 const Onboard = ({ navigation }) => {
   return (

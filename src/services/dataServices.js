@@ -23,3 +23,16 @@ export const readFromAsyncStorage = async (key) => {
     return response;
   }
 };
+
+export const clearFromAsyncStorage = async (key) => {
+  const response = { data: null, error: null };
+  try {
+    await AsyncStorage.removeItem(key);
+    response.data = "Success";
+    return response;
+  } catch (error) {
+    response.error = error;
+    console.log("error with readFromAsyncStorage", error);
+    return response;
+  }
+};

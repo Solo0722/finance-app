@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Center,
   Heading,
@@ -14,17 +14,17 @@ import {
   VStack,
   Icon,
   Divider,
+  Toast,
 } from "native-base";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { darkTheme } from "../../theme/colors";
 import { Iconify } from "react-native-iconify";
-import BackButton from "../../components/BackButton";
 import { routeNames, storageKeys } from "../../constants/routeNames";
-import { registerUser } from "../../services/apiServices";
 import { useState } from "react";
 import { saveToAsyncStorage } from "../../services/dataServices";
-import { useStore } from "../../store/Store";
-import { setLoggedInUser } from "../../store/modules/auth/actions/AuthAction";
+import { client } from "../../services/sanityClient";
+import uniqueId from "lodash/uniqueId";
+import { GlobalContext } from "../../context/ContextProvider";
 
 const Signup = ({ navigation }) => {
   const [signupData, setSignupData] = useState({
@@ -35,22 +35,40 @@ const Signup = ({ navigation }) => {
   });
   const [isSignupEnabled, setIsSignupEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [dispatch] = useStore();
+  const { setLoggedInUser } = useContext(GlobalContext);
 
   const handleChange = (name, value) => {
     setSignupData({ ...signupData, [name]: value });
   };
 
-  const signUserUp = async () => {
+  const signUserUp = () => {
     if (isSignupEnabled) {
-      // setLoading(true);
-      const response = registerUser(signupData);
-      if (response.data) {
-        console.log(response);
-        await saveToAsyncStorage(storageKeys.USER, response.data);
-        // dispatch(setLoggedInUser(response.data));
-        // navigation.navigate(routeNames.VERIFICATIONCOMPLETE);
-      }
+      setLoading(true);
+      const doc = {
+        _id: uniqueId(),
+        _type: "user",
+        fullName: signupData.fullName,
+        email: signupData.email,
+        password: signupData.password,
+        userImg: null,
+      };
+
+      client
+        .createIfNotExists(doc)
+        .then(async (result) => {
+          setLoggedInUser(result);
+          await saveToAsyncStorage(storageKeys.USER, result);
+          navigation.navigate(routeNames.TAB);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          Toast.show({
+            title: "Sign up failed! Try again.",
+          });
+          setLoading(false);
+          return;
+        });
     }
     setLoading(false);
   };
@@ -68,18 +86,9 @@ const Signup = ({ navigation }) => {
 
   return (
     <ScreenWrapper>
-      <Center w="100%" height="100%" flex="1">
-        <Box
-          safeArea
-          p="2"
-          py="8"
-          w="100%"
-          height={"100%"}
-          flex="1"
-          position="relative"
-        >
-          <VStack space={7}>
-            <BackButton styles={{ width: 24, height: 24 }} />
+      <Box safeArea py="8" w="100%" height="100%" flex="1">
+        <Center w="100%" height={"100%"} flex="1" position="relative">
+          <VStack space={5} w="full">
             <Box>
               <Heading size="lg" fontWeight="700">
                 Sign up {"\n"}to an account
@@ -98,7 +107,7 @@ const Signup = ({ navigation }) => {
             </Box>
           </VStack>
 
-          <VStack space={7} mt="10">
+          <VStack space={5} mt="10" w="full">
             <FormControl>
               <Input
                 name="fullName"
@@ -232,9 +241,6 @@ const Signup = ({ navigation }) => {
               onPress={signUserUp}
               isLoading={loading}
               disabled={!isSignupEnabled}
-              _disabled={{
-                color: "red.300",
-              }}
             >
               Sign up
             </Button>
@@ -281,8 +287,8 @@ const Signup = ({ navigation }) => {
               Sign in
             </Link>
           </HStack>
-        </Box>
-      </Center>
+        </Center>
+      </Box>
     </ScreenWrapper>
   );
 };

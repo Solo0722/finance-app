@@ -36,12 +36,12 @@ const TabHeader = ({
         {title ? (
           <Heading fontSize="sm">{title}</Heading>
         ) : (
-          <HStack space="2">
+          <HStack space="2" alignItems={"center"}>
             {leftComponents.map((component) => component.component)}
           </HStack>
         )}
       </HStack>
-      <HStack space="2">
+      <HStack space="2" alignItems={"center"}>
         {rightComponents.map((component) => component.component)}
       </HStack>
     </Box>
